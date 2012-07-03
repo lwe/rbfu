@@ -12,6 +12,7 @@ class Rbfu < Formula
 
   def install
     prefix.install Dir['*']
+    (share+'zsh/site-functions').install 'etc/rbfu.zsh_completion' => '_rbfu'
   end
 
   def test
@@ -27,6 +28,9 @@ class Rbfu < Formula
     changes, remove the --auto option:
 
         eval "$(rbfu --init)"
+
+    ZSH completion has been installed to:
+      #{HOMEBREW_PREFIX}/share/zsh/site-functions
 
     Additional tips & tricks can be found in rbfu's README:
 

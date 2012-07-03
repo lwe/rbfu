@@ -1,0 +1,27 @@
+#compdef rbfu
+
+# rbfu tab-completion script for zsh.
+#
+local curcontext="$curcontext" state line _rubies _rubies_dir ret=1
+
+_arguments -w -S \
+  '(-)--help[show usage and exit]: :->noargs' \
+  '1: :->versions' \
+  '*::: :->args' && ret=0
+
+case $state in
+  versions)
+    _rubies_dir="${RBFU_RUBIES}"
+    [[ ! -d "${_rubies_dir}" ]] && _rubies_dir="${HOME}/.rbfu/rubies"
+
+    _rubies=( $(ls -1 "${_rubies_dir}" 2>/dev/null | sed -e 's/^/@/') )
+    _rubies+=( $(echo "@system") )
+
+    _values 'rubies' $_rubies && ret=0
+    ;;
+  args)
+    _normal && ret=0
+    ;;
+esac
+
+return $ret
